@@ -1,33 +1,30 @@
 export const NAV_LINKS = [
-  { href: '#next-steps', label: 'What Happens Next' },
-  { href: '#proof', label: 'Results' },
+  { href: '#next-steps', label: 'Next Steps' },
+  { href: '#proof', label: 'Reviews' },
   { href: '#priority-call', label: 'Priority Call' },
 ];
 
 export const HERO_CHIPS = [
   '5.0 Google rating',
-  '100+ verified reviews',
+  '102 reviews',
   'Reply within 24 hours',
 ];
 
 export const STEPS = [
   {
     phase: 'Today',
-    title: 'We review your website and rankings',
-    copy:
-      'Your enquiry goes straight into the Digital Movement workflow so the team can assess your current site, search visibility, and easiest growth wins.',
+    title: 'We review your site',
+    copy: 'Your website, rankings, and easiest quick wins are checked first.',
   },
   {
     phase: 'Next',
-    title: 'We map the fastest route to more enquiries',
-    copy:
-      'We turn what we find into a clear, plain-English plan covering SEO, Google Ads, landing pages, and where the quickest results are likely to come from.',
+    title: 'We map the opportunity',
+    copy: 'We prioritise the strongest SEO, Google Ads, and landing page moves.',
   },
   {
     phase: 'Then',
-    title: 'You get a strategy conversation, not a sales waffle',
-    copy:
-      'If the fit is right, we walk you through the numbers, the opportunity, and the quickest route to page-one momentum without burying you in jargon.',
+    title: 'We talk through the plan',
+    copy: 'You get clear advice in plain English, not a padded sales pitch.',
   },
 ];
 
@@ -35,22 +32,46 @@ export const STATS = [
   { value: 1312, suffix: '%', label: 'Increase in monthly leads' },
   { value: 1125, suffix: '%', label: 'Increase in conversions' },
   { value: 5, suffix: '', label: 'Days to page 1' },
-  { value: 100, suffix: '+', label: '5-star Google reviews' },
+  { value: 102, suffix: '', label: 'Google reviews' },
 ];
 
-export const TRUST_POINTS = [
-  'Real proof before big promises',
-  'Straight talk and plain-English strategy',
-  'Fast feedback from a live UK team',
-  'Clear next steps instead of vague "solutions"',
-];
-
-export const REVIEW = {
-  quote:
-    'Digital Movement have been amazing to work with. The team built me a great website and set up SEO and Google Ads, and I started getting real leads not long after.',
-  name: 'Beth Sorensen',
-  role: 'Verified Google Review',
+export const REVIEW_SUMMARY = {
+  rating: '5.0',
+  count: '102 reviews',
 };
+
+export const REVIEWS = [
+  {
+    quote:
+      'Great quality service, proactive and positive, easy to deal with, and outcomes as promised.',
+    name: 'Jessica Purcell',
+    role: 'Google Review',
+  },
+  {
+    quote:
+      'A great company. Marty was incredibly professional, listened to my concerns, and made sure I felt heard.',
+    name: 'Tamara',
+    role: 'Google Review',
+  },
+  {
+    quote:
+      'Punctual, organised, efficient - I could not recommend a better social media marketing agency.',
+    name: 'Fabienne M',
+    role: 'Google Review',
+  },
+  {
+    quote:
+      'Dean and the team built me a great website, set up SEO and Google Ads, and I started getting real leads not long after.',
+    name: 'Beth Sorensen',
+    role: 'Google Review',
+  },
+  {
+    quote:
+      'Stuart, Dean and the crew have been excellent with our website redesign, Google advertising, and SEO, with strong results quite quickly.',
+    name: 'Matthew Kang',
+    role: 'Google Review',
+  },
+];
 
 export const SLOT_GROUPS = [
   {
