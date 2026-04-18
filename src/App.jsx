@@ -1,4 +1,4 @@
-import { startTransition, useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   AnimatePresence,
   LazyMotion,
@@ -13,11 +13,11 @@ import {
 import {
   HERO_CHIPS,
   NAV_LINKS,
-  REVIEWS,
-  REVIEW_SUMMARY,
+  REVIEW,
   SLOT_GROUPS,
   STATS,
   STEPS,
+  TRUST_POINTS,
 } from './content';
 
 const SECTION_REVEAL = {
@@ -30,13 +30,13 @@ const SECTION_REVEAL = {
 };
 
 const CARD_REVEAL = {
-  hidden: { opacity: 0, y: 32, scale: 0.98 },
+  hidden: { opacity: 0, y: 36, scale: 0.98 },
   visible: (index = 0) => ({
     opacity: 1,
     y: 0,
     scale: 1,
     transition: {
-      duration: 0.62,
+      duration: 0.7,
       delay: index * 0.08,
       ease: [0.22, 1, 0.36, 1],
     },
@@ -57,20 +57,14 @@ function CheckIcon(props) {
   );
 }
 
-function HeroCheckIcon(props) {
+function SparkIcon(props) {
   return (
-    <m.svg viewBox="0 0 24 24" fill="none" aria-hidden="true" {...props}>
-      <m.path
-        d="M5 12.5 10 17l9-10"
-        stroke="currentColor"
-        strokeWidth="2.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        initial={{ pathLength: 0, opacity: 0 }}
-        animate={{ pathLength: 1, opacity: 1 }}
-        transition={{ duration: 0.72, delay: 0.34, ease: [0.22, 1, 0.36, 1] }}
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" {...props}>
+      <path
+        d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Zm6.5 11 .9 2.4L22 17.3l-2.6.9-.9 2.5-.9-2.5-2.5-.9 2.5-.9.9-2.4Z"
+        fill="currentColor"
       />
-    </m.svg>
+    </svg>
   );
 }
 
@@ -155,10 +149,10 @@ function GoogleIcon(props) {
   );
 }
 
-function SectionTitle({ eyebrow, title, copy }) {
+function SectionTitle({ eyebrow, title, copy, align = 'left' }) {
   return (
     <m.div
-      className="section-title"
+      className={`section-title section-title--${align}`}
       variants={SECTION_REVEAL}
       initial="hidden"
       whileInView="visible"
@@ -188,15 +182,20 @@ function Header({ onOpenModal, progress }) {
             </a>
           ))}
         </nav>
-        <m.button
-          className="button button--light button--small"
-          type="button"
-          onClick={onOpenModal}
-          whileHover={{ y: -2 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          Priority Call
-        </m.button>
+        <div className="header-actions">
+          <a className="header-phone" href="tel:02038157992">
+            0203 815 7992
+          </a>
+          <m.button
+            className="button button--light"
+            type="button"
+            onClick={onOpenModal}
+            whileHover={{ y: -2 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            Priority Call
+          </m.button>
+        </div>
       </div>
     </header>
   );
@@ -209,8 +208,9 @@ function Hero({ onOpenModal }) {
     target: heroRef,
     offset: ['start start', 'end start'],
   });
-  const motifY = useTransform(scrollYProgress, [0, 1], [0, shouldReduceMotion ? 0 : 140]);
-  const motifScale = useTransform(scrollYProgress, [0, 1], [1, shouldReduceMotion ? 1 : 1.08]);
+  const motifY = useTransform(scrollYProgress, [0, 1], [0, shouldReduceMotion ? 0 : 180]);
+  const motifScale = useTransform(scrollYProgress, [0, 1], [1, shouldReduceMotion ? 1 : 1.16]);
+  const panelY = useTransform(scrollYProgress, [0, 1], [0, shouldReduceMotion ? 0 : -60]);
 
   return (
     <section id="top" ref={heroRef} className="hero">
@@ -221,28 +221,34 @@ function Hero({ onOpenModal }) {
         alt=""
         style={{ y: motifY, scale: motifScale }}
       />
-      <div className="shell hero-inner">
-        <m.div className="hero-copy" variants={SECTION_REVEAL} initial="hidden" animate="visible">
+      <div className="shell hero-grid">
+        <m.div
+          className="hero-copy"
+          variants={SECTION_REVEAL}
+          initial="hidden"
+          animate="visible"
+        >
           <div className="hero-kicker">
             <span className="hero-kicker__dot" />
             Request received
           </div>
           <m.div
             className="hero-confirm"
-            initial={{ scale: 0.86, opacity: 0 }}
+            initial={{ scale: 0.88, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.68, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
           >
-            <HeroCheckIcon />
+            <CheckIcon />
           </m.div>
           <h1>
             Thank you. <span>We&apos;ve got your details.</span>
           </h1>
           <p className="hero-lead">
-            One of our digital marketing specialists will review your website and come back to you
-            within 24 hours.
+            One of our digital marketing specialists will review your website and come back to
+            you within 24 hours with the clearest route to more enquiries, better visibility, and
+            faster momentum.
           </p>
-          <div className="hero-status">
+          <div className="hero-chip-row">
             {HERO_CHIPS.map((chip) => (
               <span key={chip} className="hero-chip">
                 {chip}
@@ -270,14 +276,56 @@ function Hero({ onOpenModal }) {
               Call us now
             </m.a>
           </div>
-          <m.div
-            className="hero-logo-pill"
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <img src="brand/logo-color-positive.svg" alt="Digital Movement" />
-          </m.div>
+          <div className="hero-meta">
+            <SparkIcon />
+            If you already know you want to move fast, skip the wait and lock in a priority call
+            now.
+          </div>
+        </m.div>
+
+        <m.div
+          className="hero-rail"
+          style={{ y: panelY }}
+          initial={{ opacity: 0, y: 32 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+        >
+          <div className="hero-art-card">
+            <img src="brand/cover-option-1.png" alt="Digital Movement brand artwork" />
+          </div>
+          <div className="hero-status-card">
+            <div className="hero-status-card__logo">
+              <img src="brand/logo-color-positive.svg" alt="Digital Movement" />
+            </div>
+            <div className="hero-status-card__copy">
+              <span className="eyebrow">Your enquiry is moving</span>
+              <h3>What happens behind the scenes now</h3>
+              <ul>
+                <li>
+                  <CheckIcon />
+                  Website and rankings reviewed first
+                </li>
+                <li>
+                  <CheckIcon />
+                  Quick-win opportunities identified
+                </li>
+                <li>
+                  <CheckIcon />
+                  Strategy response prepared by the team
+                </li>
+              </ul>
+            </div>
+            <div className="hero-status-card__footer">
+              <div>
+                <span className="status-label">Response window</span>
+                <strong>Within 24 hours</strong>
+              </div>
+              <button type="button" onClick={onOpenModal}>
+                Open priority options
+                <ArrowIcon />
+              </button>
+            </div>
+          </div>
         </m.div>
       </div>
     </section>
@@ -286,13 +334,14 @@ function Hero({ onOpenModal }) {
 
 function NextStepsSection() {
   return (
-    <section id="next-steps" className="section-shell section-shell--soft">
+    <section id="next-steps" className="section-shell section-shell--tight">
       <div className="shell">
         <SectionTitle
           eyebrow="What happens next"
-          title="Three simple steps"
-          copy="This part stays quick and clear, just like the prototype."
+          title="Three simple steps from enquiry to strategy"
+          copy="From here, we review your current setup, find the quickest wins, and come back with the clearest next move."
         />
+        <div className="steps-rail" aria-hidden="true" />
         <div className="steps-grid">
           {STEPS.map((step, index) => (
             <m.article
@@ -304,7 +353,7 @@ function NextStepsSection() {
               whileInView="visible"
               viewport={{ once: true, amount: 0.35 }}
             >
-              <span className="step-phase">{step.phase}</span>
+              <div className="step-pill">{step.phase}</div>
               <div className="step-index">{String(index + 1).padStart(2, '0')}</div>
               <h3>{step.title}</h3>
               <p>{step.copy}</p>
@@ -318,7 +367,7 @@ function NextStepsSection() {
 
 function AnimatedStat({ value, suffix, label }) {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, amount: 0.55 });
+  const inView = useInView(ref, { once: true, amount: 0.6 });
   const shouldReduceMotion = useReducedMotion();
   const [displayValue, setDisplayValue] = useState(0);
 
@@ -329,7 +378,7 @@ function AnimatedStat({ value, suffix, label }) {
       return undefined;
     }
     const controls = animate(0, value, {
-      duration: 1.2,
+      duration: 1.4,
       ease: [0.22, 1, 0.36, 1],
       onUpdate: (latest) => setDisplayValue(Math.round(latest)),
     });
@@ -347,129 +396,64 @@ function AnimatedStat({ value, suffix, label }) {
   );
 }
 
-function ReviewsSlider() {
-  const shouldReduceMotion = useReducedMotion();
-  const [activeIndex, setActiveIndex] = useState(0);
-  const activeReview = REVIEWS[activeIndex];
-
-  useEffect(() => {
-    if (shouldReduceMotion) return undefined;
-    const timer = window.setInterval(() => {
-      startTransition(() => {
-        setActiveIndex((current) => (current + 1) % REVIEWS.length);
-      });
-    }, 4800);
-    return () => window.clearInterval(timer);
-  }, [shouldReduceMotion]);
-
-  const goTo = (index) => {
-    startTransition(() => setActiveIndex(index));
-  };
-
-  const goPrevious = () => {
-    startTransition(() => {
-      setActiveIndex((current) => (current - 1 + REVIEWS.length) % REVIEWS.length);
-    });
-  };
-
-  const goNext = () => {
-    startTransition(() => {
-      setActiveIndex((current) => (current + 1) % REVIEWS.length);
-    });
-  };
-
-  return (
-    <m.div
-      className="reviews-shell"
-      variants={SECTION_REVEAL}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
-    >
-      <div className="reviews-summary">
-        <div className="reviews-summary__chip">
-          <GoogleIcon />
-          <span>Google Reviews</span>
-        </div>
-        <div className="reviews-summary__meta">
-          <strong>{REVIEW_SUMMARY.rating}</strong>
-          <span>Based on {REVIEW_SUMMARY.count}</span>
-        </div>
-      </div>
-
-      <div className="review-slider">
-        <button
-          className="review-arrow review-arrow--left"
-          type="button"
-          onClick={goPrevious}
-          aria-label="Previous review"
-        >
-          <ArrowIcon />
-        </button>
-
-        <div className="review-slider__viewport">
-          <AnimatePresence mode="wait">
-            <m.article
-              key={activeReview.name}
-              className="review-card"
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -18 }}
-              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <div className="review-stars" aria-hidden="true">
-                *****
-              </div>
-              <blockquote>{activeReview.quote}</blockquote>
-              <div className="review-meta">
-                <strong>{activeReview.name}</strong>
-                <span>{activeReview.role}</span>
-              </div>
-            </m.article>
-          </AnimatePresence>
-        </div>
-
-        <button
-          className="review-arrow"
-          type="button"
-          onClick={goNext}
-          aria-label="Next review"
-        >
-          <ArrowIcon />
-        </button>
-      </div>
-
-      <div className="review-dots" aria-label="Review navigation">
-        {REVIEWS.map((review, index) => (
-          <button
-            key={review.name}
-            className={index === activeIndex ? 'is-active' : ''}
-            type="button"
-            onClick={() => goTo(index)}
-            aria-label={`Show review ${index + 1}`}
-            aria-pressed={index === activeIndex}
-          />
-        ))}
-      </div>
-    </m.div>
-  );
-}
-
 function ProofSection() {
   return (
     <section id="proof" className="section-shell section-shell--gradient">
       <div className="shell">
         <SectionTitle
-          eyebrow="Proof"
-          title="Google reviews and real results"
-          copy="This section is shorter now, but still keeps the strongest proof visible."
+          eyebrow="Why businesses trust us"
+          title="Proof up front, not hidden away"
+          copy="The businesses that work with Digital Movement want clear results, honest advice, and a team that moves quickly once the opportunity is there."
         />
         <div className="stats-grid">
           {STATS.map((stat) => (
             <AnimatedStat key={stat.label} {...stat} />
           ))}
         </div>
-        <ReviewsSlider />
+
+        <div className="proof-layout">
+          <m.article
+            className="review-card"
+            variants={SECTION_REVEAL}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+          >
+            <div className="review-stars" aria-hidden="true">
+              5/5
+            </div>
+            <blockquote>{REVIEW.quote}</blockquote>
+            <div className="review-meta">
+              <strong>{REVIEW.name}</strong>
+              <span>{REVIEW.role}</span>
+            </div>
+            <div className="review-chip">
+              <GoogleIcon />
+              5.0 rating - based on 100+ reviews
+            </div>
+          </m.article>
+
+          <m.aside
+            className="proof-panel"
+            variants={SECTION_REVEAL}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+          >
+            <div className="proof-panel__logo">
+              <img src="brand/logo-color-positive.svg" alt="Digital Movement" />
+            </div>
+            <h3>What you can expect from the team</h3>
+            <ul>
+              {TRUST_POINTS.map((point) => (
+                <li key={point}>
+                  <CheckIcon />
+                  {point}
+                </li>
+              ))}
+            </ul>
+          </m.aside>
+        </div>
       </div>
     </section>
   );
@@ -480,33 +464,71 @@ function PrioritySection({ onOpenModal }) {
 
   return (
     <section id="priority-call" className="section-shell section-shell--cta">
-      <div className="shell priority-shell">
-        <SectionTitle
-          eyebrow="Want to speak sooner?"
-          title="Book a priority call"
-          copy="Pick a slot or call the team directly."
-        />
-        <div className="priority-actions">
-          <m.button
-            className="button button--primary button--large"
-            type="button"
-            onClick={onOpenModal}
-            whileHover={shouldReduceMotion ? {} : { y: -4, scale: 1.015 }}
-            whileTap={{ scale: 0.985 }}
-          >
-            <CalendarIcon />
-            Choose a priority slot
-          </m.button>
-          <m.a
-            className="button button--ghost button--large"
-            href="tel:02038157992"
-            whileHover={shouldReduceMotion ? {} : { y: -4, scale: 1.015 }}
-            whileTap={{ scale: 0.985 }}
-          >
-            <PhoneIcon />
-            Call 0203 815 7992
-          </m.a>
-        </div>
+      <div className="shell priority-layout">
+        <m.div
+          className="priority-copy"
+          variants={SECTION_REVEAL}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+        >
+          <span className="eyebrow">Don&apos;t want to wait?</span>
+          <h2>Jump straight to the front of the queue</h2>
+          <p>
+            If you already know you want to speak with the team sooner, use the priority call
+            options below or call us directly in London.
+          </p>
+          <div className="priority-actions">
+            <m.button
+              className="button button--primary button--large"
+              type="button"
+              onClick={onOpenModal}
+              whileHover={shouldReduceMotion ? {} : { y: -4, scale: 1.015 }}
+              whileTap={{ scale: 0.985 }}
+            >
+              <CalendarIcon />
+              Choose a priority slot
+            </m.button>
+            <m.a
+              className="button button--ghost button--large"
+              href="tel:02038157992"
+              whileHover={shouldReduceMotion ? {} : { y: -4, scale: 1.015 }}
+              whileTap={{ scale: 0.985 }}
+            >
+              <PhoneIcon />
+              Call 0203 815 7992
+            </m.a>
+          </div>
+        </m.div>
+
+        <m.div
+          className="priority-card"
+          variants={CARD_REVEAL}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.35 }}
+          custom={0}
+        >
+          <img className="priority-card__motif" src="brand/motif-positive.png" alt="" />
+          <div className="priority-card__inner">
+            <span className="priority-tag">Digital Movement UK</span>
+            <h3>Priority support options</h3>
+            <p>
+              Use the modal to send a booked-slot request by email, or phone the team directly if
+              you want the quickest possible response.
+            </p>
+            <div className="priority-card__details">
+              <div>
+                <span>Phone</span>
+                <strong>0203 815 7992</strong>
+              </div>
+              <div>
+                <span>Email</span>
+                <strong>office@digitalmovement.uk</strong>
+              </div>
+            </div>
+          </div>
+        </m.div>
       </div>
     </section>
   );
@@ -515,13 +537,22 @@ function PrioritySection({ onOpenModal }) {
 function Footer() {
   return (
     <footer className="site-footer">
-      <div className="shell footer-inner">
-        <img className="footer-logo" src="brand/logo-mono-positive.svg" alt="Digital Movement" />
-        <p>
-          128 City Road, London, EC1V 2NX, United Kingdom
-          <br />
-          0203 815 7992 | office@digitalmovement.uk
-        </p>
+      <div className="shell footer-grid">
+        <div className="footer-brand">
+          <img src="brand/logo-mono-positive.svg" alt="Digital Movement" />
+          <p>
+            128 City Road, London, EC1V 2NX, United Kingdom
+            <br />
+            0203 815 7992 | office@digitalmovement.uk
+          </p>
+        </div>
+        <div className="footer-links">
+          {NAV_LINKS.map((link) => (
+            <a key={link.label} href={link.href}>
+              {link.label}
+            </a>
+          ))}
+        </div>
       </div>
     </footer>
   );
@@ -529,7 +560,10 @@ function Footer() {
 
 function PriorityModal({ open, onClose }) {
   const [selectedDay, setSelectedDay] = useState(SLOT_GROUPS[0].day);
-  const currentSlots = SLOT_GROUPS.find((group) => group.day === selectedDay)?.slots ?? [];
+  const currentSlots = useMemo(
+    () => SLOT_GROUPS.find((group) => group.day === selectedDay)?.slots ?? [],
+    [selectedDay],
+  );
 
   useEffect(() => {
     if (!open) return undefined;
@@ -540,16 +574,9 @@ function PriorityModal({ open, onClose }) {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [onClose, open]);
 
-  const chooseDay = (day) => {
-    startTransition(() => setSelectedDay(day));
-  };
-
   const bookSlot = (time) => {
     const subject = `Priority call request - ${selectedDay} ${time}`;
-    const body =
-      "Hi Digital Movement,%0D%0A%0D%0AI'd like to request the " +
-      `${selectedDay} ${time}` +
-      " priority call slot.%0D%0A%0D%0AName:%0D%0ABusiness:%0D%0AWebsite:%0D%0APhone:%0D%0A%0D%0AThanks";
+    const body = `Hi Digital Movement,%0D%0A%0D%0AI'd like to request the ${selectedDay} ${time} priority call slot.%0D%0A%0D%0AName:%0D%0ABusiness:%0D%0AWebsite:%0D%0APhone:%0D%0A%0D%0AThanks`;
     window.location.href = `mailto:office@digitalmovement.uk?subject=${encodeURIComponent(subject)}&body=${body}`;
   };
 
@@ -585,8 +612,8 @@ function PriorityModal({ open, onClose }) {
             <span className="eyebrow">Priority call</span>
             <h3 id="priority-modal-title">Choose a preferred slot</h3>
             <p>
-              Pick the day that works best and we&apos;ll start a ready-made email with that slot
-              filled in.
+              Pick the day that works best and we&apos;ll start a ready-made email for you with
+              that slot already filled in.
             </p>
             <div className="slot-days" role="tablist" aria-label="Available days">
               {SLOT_GROUPS.map((group) => (
@@ -594,7 +621,7 @@ function PriorityModal({ open, onClose }) {
                   key={group.day}
                   className={selectedDay === group.day ? 'is-active' : ''}
                   type="button"
-                  onClick={() => chooseDay(group.day)}
+                  onClick={() => setSelectedDay(group.day)}
                 >
                   {group.day}
                 </button>
