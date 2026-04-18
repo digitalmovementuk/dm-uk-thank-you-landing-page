@@ -6,28 +6,28 @@ export const NAV_LINKS = [
 
 export const HERO_CHIPS = [
   '5.0 Google rating',
-  '100+ verified reviews',
+  '100+ 5-star reviews',
   'Reply within 24 hours',
 ];
 
 export const STEPS = [
   {
     phase: 'Today',
-    title: 'We go through your website and rankings',
+    title: 'We go through your website properly',
     copy:
-      'Your enquiry lands straight with the team so we can see what is working, what is not, and where the quickest wins are.',
+      'We check your website, your rankings, and where you are missing easy wins.',
   },
   {
     phase: 'Next',
-    title: 'We map out the best next move',
+    title: 'We tell you what is worth doing',
     copy:
-      'We pull together the clearest route across SEO, Google Ads, landing pages, and the areas most likely to bring in more enquiries.',
+      'We map out the strongest next move across SEO, Google Ads, landing pages, and the quickest route to more enquiries.',
   },
   {
     phase: 'Then',
-    title: 'We talk you through it properly',
+    title: 'We keep it straight',
     copy:
-      'No fluff, no waffle, and no burying you in jargon. Just straight advice on what we would do and why.',
+      'No fluff, no waffle, and no agency jargon. Just clear advice on what we would do if we were in your shoes.',
   },
 ];
 
@@ -39,10 +39,10 @@ export const STATS = [
 ];
 
 export const TRUST_POINTS = [
-  'Real proof before big promises',
-  'Straight-talking advice in plain English',
-  'Fast feedback from a real UK team',
-  'A clear plan instead of vague "solutions"',
+  'No fluff, just clear advice',
+  'Real proof and real accountability',
+  'Fast feedback from a proper UK team',
+  'Clear next steps, not vague agency talk',
 ];
 
 export const REVIEW = {
