@@ -13,21 +13,21 @@ export const HERO_CHIPS = [
 export const STEPS = [
   {
     phase: 'Today',
-    title: 'We review your website and rankings',
+    title: 'We go through your website and rankings',
     copy:
-      'Your enquiry goes straight into the Digital Movement workflow so the team can assess your current site, search visibility, and easiest growth wins.',
+      'Your enquiry lands straight with the team so we can see what is working, what is not, and where the quickest wins are.',
   },
   {
     phase: 'Next',
-    title: 'We map the fastest route to more enquiries',
+    title: 'We map out the best next move',
     copy:
-      'We turn what we find into a clear, plain-English plan covering SEO, Google Ads, landing pages, and where the quickest results are likely to come from.',
+      'We pull together the clearest route across SEO, Google Ads, landing pages, and the areas most likely to bring in more enquiries.',
   },
   {
     phase: 'Then',
-    title: 'You get a strategy conversation, not a sales waffle',
+    title: 'We talk you through it properly',
     copy:
-      'If the fit is right, we walk you through the numbers, the opportunity, and the quickest route to page-one momentum without burying you in jargon.',
+      'No fluff, no waffle, and no burying you in jargon. Just straight advice on what we would do and why.',
   },
 ];
 
@@ -40,9 +40,9 @@ export const STATS = [
 
 export const TRUST_POINTS = [
   'Real proof before big promises',
-  'Straight talk and plain-English strategy',
-  'Fast feedback from a live UK team',
-  'Clear next steps instead of vague "solutions"',
+  'Straight-talking advice in plain English',
+  'Fast feedback from a real UK team',
+  'A clear plan instead of vague "solutions"',
 ];
 
 export const REVIEW = {

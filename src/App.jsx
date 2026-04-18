@@ -244,9 +244,8 @@ function Hero({ onOpenModal }) {
             Thank you. <span>We&apos;ve got your details.</span>
           </h1>
           <p className="hero-lead">
-            One of our digital marketing specialists will review your website and come back to
-            you within 24 hours with the clearest route to more enquiries, better visibility, and
-            faster momentum.
+            Cheers, we&apos;ve got your enquiry. One of the team will go through your website and
+            come back to you within 24 hours with clear advice on the quickest wins.
           </p>
           <div className="hero-chip-row">
             {HERO_CHIPS.map((chip) => (
@@ -278,8 +277,8 @@ function Hero({ onOpenModal }) {
           </div>
           <div className="hero-meta">
             <SparkIcon />
-            If you already know you want to move fast, skip the wait and lock in a priority call
-            now.
+            If you want to get moving sooner, lock in a priority call and we&apos;ll speed things
+            up.
           </div>
         </m.div>
 
@@ -299,19 +298,19 @@ function Hero({ onOpenModal }) {
             </div>
             <div className="hero-status-card__copy">
               <span className="eyebrow">Your enquiry is moving</span>
-              <h3>What happens behind the scenes now</h3>
+              <h3>What we&apos;re doing now</h3>
               <ul>
                 <li>
                   <CheckIcon />
-                  Website and rankings reviewed first
+                  Going through your website and rankings
                 </li>
                 <li>
                   <CheckIcon />
-                  Quick-win opportunities identified
+                  Looking for the quickest wins first
                 </li>
                 <li>
                   <CheckIcon />
-                  Strategy response prepared by the team
+                  Putting together the best next move
                 </li>
               </ul>
             </div>
@@ -339,7 +338,7 @@ function NextStepsSection() {
         <SectionTitle
           eyebrow="What happens next"
           title="Three simple steps from enquiry to strategy"
-          copy="From here, we review your current setup, find the quickest wins, and come back with the clearest next move."
+          copy="We keep this simple. Here is exactly what happens from here."
         />
         <div className="steps-rail" aria-hidden="true" />
         <div className="steps-grid">
@@ -402,8 +401,8 @@ function ProofSection() {
       <div className="shell">
         <SectionTitle
           eyebrow="Why businesses trust us"
-          title="Proof up front, not hidden away"
-          copy="The businesses that work with Digital Movement want clear results, honest advice, and a team that moves quickly once the opportunity is there."
+          title="Real proof, not a sales pitch"
+          copy="We are big on straight answers and strong results. The numbers and reviews below speak for themselves."
         />
         <div className="stats-grid">
           {STATS.map((stat) => (
@@ -443,7 +442,7 @@ function ProofSection() {
             <div className="proof-panel__logo">
               <img src="brand/logo-color-positive.svg" alt="Digital Movement" />
             </div>
-            <h3>What you can expect from the team</h3>
+            <h3>What you can expect from us</h3>
             <ul>
               {TRUST_POINTS.map((point) => (
                 <li key={point}>
@@ -472,11 +471,11 @@ function PrioritySection({ onOpenModal }) {
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
         >
-          <span className="eyebrow">Don&apos;t want to wait?</span>
+          <span className="eyebrow">Want to move quicker?</span>
           <h2>Jump straight to the front of the queue</h2>
           <p>
-            If you already know you want to speak with the team sooner, use the priority call
-            options below or call us directly in London.
+            If you&apos;d rather get things moving straight away, grab a priority slot or give the
+            team a ring.
           </p>
           <div className="priority-actions">
             <m.button
@@ -512,10 +511,10 @@ function PrioritySection({ onOpenModal }) {
           <img className="priority-card__motif" src="brand/motif-positive.png" alt="" />
           <div className="priority-card__inner">
             <span className="priority-tag">Digital Movement UK</span>
-            <h3>Priority support options</h3>
+            <h3>If you want to speak sooner</h3>
             <p>
-              Use the modal to send a booked-slot request by email, or phone the team directly if
-              you want the quickest possible response.
+              Use the priority slots or call us directly. Either way, we&apos;ll point you in the
+              right direction.
             </p>
             <div className="priority-card__details">
               <div>
@@ -612,8 +611,8 @@ function PriorityModal({ open, onClose }) {
             <span className="eyebrow">Priority call</span>
             <h3 id="priority-modal-title">Choose a preferred slot</h3>
             <p>
-              Pick the day that works best and we&apos;ll start a ready-made email for you with
-              that slot already filled in.
+              Pick the day that suits you best and we&apos;ll start the email for you with that
+              slot already filled in.
             </p>
             <div className="slot-days" role="tablist" aria-label="Available days">
               {SLOT_GROUPS.map((group) => (
